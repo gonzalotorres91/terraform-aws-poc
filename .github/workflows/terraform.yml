@@ -27,7 +27,13 @@ jobs:
           terraform_version: 1.5.3
 
       - name: Verify Terraform Cloud token (debug)
-        run: echo "Token length: ${#TF_TOKEN_app_terraform_io}"
+        run: |
+          if [ -z "$TF_TOKEN_app_terraform_io" ]; then
+            echo "TF_TOKEN_app_terraform_io is empty"
+            exit 1
+          else
+            echo "TF_TOKEN_app_terraform_io is set"
+          fi
 
       - name: Terraform Init
         run: terraform init
