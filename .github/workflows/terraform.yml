@@ -33,9 +33,9 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -var="aws_secret_key=${{ env.AWS_SECRET_ACCESS_KEY }}"
+        run: terraform plan
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply --auto-approve -var="aws_secret_key=${{ env.AWS_SECRET_ACCESS_KEY }}"
+        run: terraform apply --auto-approve
 
