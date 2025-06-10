@@ -1,29 +1,20 @@
 terraform {
-  required_version = ">= 1.3.0"
-
-  cloud {
-    organization = "devops-poc-org1"
-
-    workspaces {
-      name = "aws-poc"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0"
     }
   }
-}
 
-variable "aws_access_key" {
-  type      = string
-  sensitive = true
-}
-
-variable "aws_secret_key" {
-  type      = string
-  sensitive = true
+  required_version = ">= 1.3.0"
 }
 
 provider "aws" {
-  region     = "us-east-1"
-  access_key = var.aws_access_key
-  secret_key = var.aws_secret_key
+  region = "us-east-1"  # Cambia a tu región si es necesario
 }
 
 resource "random_id" "bucket_id" {
@@ -31,7 +22,16 @@ resource "random_id" "bucket_id" {
 }
 
 resource "aws_s3_bucket" "poc_bucket" {
-  bucket        = "terraform-poc-${random_id.bucket_id.hex}"
+  bucket        = "mi-bucket-poc-${random_id.bucket_id.hex}"
   force_destroy = true
+
+  tags = {
+    Name        = "poc-bucket"
+    Environment = "Dev"
+  }
+}
+
+output "bucket_name" {
+  value = aws_s3_bucket.poc_bucket.bucket
 }
 
