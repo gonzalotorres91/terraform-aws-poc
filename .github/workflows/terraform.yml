@@ -1,4 +1,4 @@
-name: Terraform
+name: Terraform CI/CD
 
 on:
   push:
@@ -8,14 +8,14 @@ on:
 
 jobs:
   terraform:
-    name: Terraform CI/CD
+    name: 'Terraform'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout código
         uses: actions/checkout@v3
 
-      - name: Instalar Terraform
+      - name: Configurar Terraform CLI
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.3.0
@@ -23,13 +23,13 @@ jobs:
       - name: Inicializar Terraform
         run: terraform init
         env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
 
-      - name: Validar configuración
+      - name: Validar Terraform
         run: terraform validate
 
-      - name: Ejecutar Terraform Plan
+      - name: Plan de Terraform
         run: terraform plan
-        env:
-          TF_TOKEN_app_terraf_
 
