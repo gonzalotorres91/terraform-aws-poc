@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "poc_bucket" {
-  bucket        = "mi-bucket-terraform-12345"
+  bucket        = "mi-bucket-terraform-prueba"
   force_destroy = true
 }
 
