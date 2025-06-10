@@ -1,14 +1,4 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-    random = {
-      source  = "hashicorp/random"
-      version = "~> 3.0"
-    }
-  }
+
 
   required_version = ">= 1.3.0"
 }
@@ -30,8 +20,3 @@ resource "aws_s3_bucket" "poc_bucket" {
     Environment = "Dev"
   }
 }
-
-output "bucket_name" {
-  value = aws_s3_bucket.poc_bucket.bucket
-}
-
